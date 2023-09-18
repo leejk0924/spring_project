@@ -1,8 +1,40 @@
-pluginManagement {
-    repositories {
-        maven { url 'https://repo.spring.io/milestone' }
-        maven { url 'https://repo.spring.io/snapshot' }
-        gradlePluginPortal()
-    }
-}
 rootProject.name = 'spring_project'
+
+def file(dir, name) {
+    return file("${dir.absolutePath}/${name}")
+}
+def GRADLE_TEXT = """
+dependencies{
+
+}
+"""
+
+["part1"].forEach {moduleName->
+    {
+        def moduleDir = file(rootDir, moduleName);
+        if (!moduleDir.exists()) {
+            moduleDir.mkdir();
+        }
+        moduleDir.eachFile{subProjectDir->
+            def buildFile = file(subProjectDir, "build.gradle")
+            if(!buildFile.exists()){
+                buildFile.text = GRADLE_TEXT;
+            };
+            def projectName = ":${moduleName}-${subProjectDir.name}"
+            println projectName
+            include projectName
+            project(projectName).projectDir = subProjectDir;
+            [
+                    "src/main/java/com/example/project",
+                    "src/main/resources",
+                    "src/test/java/com/example/project",
+                    "src/test/resources"
+            ].forEach {src->
+                {
+                    def srcDir = file(subProjectDir, src);
+                    if(!srcDir.exists()){
+                        srcDir.mkdirs();
+                    }
+                }}
+        }
+    }}
