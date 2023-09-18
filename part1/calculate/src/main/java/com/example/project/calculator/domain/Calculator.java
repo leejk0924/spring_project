@@ -1,6 +1,6 @@
-package com.example.project.calculator;
+package com.example.project.calculator.domain;
 
-import com.example.project.calculator.new_calculate.*;
+import com.example.project.calculator.tobe.*;
 
 import java.util.List;
 

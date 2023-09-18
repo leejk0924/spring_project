@@ -1,4 +1,4 @@
-package com.example.project.calculator.new_calculate;
+package com.example.project.calculator.domain;
 
 public class PositiveNumber {
     private final int value;
